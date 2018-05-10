@@ -1,3 +1,6 @@
+    /**
+     * Simple date util javascript
+     */
     function dateUtil() {
         var callTimeOut;
 
@@ -5,7 +8,7 @@
          * Return the date of object array between two Dates
          * @return 
          */
-        _getDaysBtnTwoDates = function(sDate, eDate) {
+        _getDaysBtnTwoDates = function (sDate, eDate) {
             var days = [];
             sDate = _convertStrToDate(sDate);
             eDate = _convertStrToDate(eDate);
@@ -19,7 +22,7 @@
          * Return the Convert String to Date
          * @return 
          */
-        _convertStrToDate = function(strDate) {
+        _convertStrToDate = function (strDate) {
             if (strDate instanceof Date) {
                 return strDate;
             } else {
@@ -42,7 +45,7 @@
          * Return the working days between two dates
          * @return 
          */
-        _getWeekDays = function(date1, date2) {
+        _getWeekDays = function (date1, date2) {
             date1 = _convertStrToDate(date1);
             date2 = _convertStrToDate(date2);
             var count = _getDaysCount(date1, date2);
@@ -61,7 +64,7 @@
          * Return the no of days between two dates
          * @return 
          */
-        _getDaysCount = function(d1, d2) {
+        _getDaysCount = function (d1, d2) {
             var date1 = _convertStrToDate(d1);
             var date2 = _convertStrToDate(d2);
             date1.setHours(0, 0, 0, 0);
@@ -75,7 +78,7 @@
          * @param  
          * @return 
          */
-        _getWeek = function(currentDate) {
+        _getWeek = function (currentDate) {
             //var current = (typeof currentDate == undefined || currentDate == null) ? new Date() : currentDate;
             var current = _convertStrToDate(currentDate);
             var weekstart = current.getDate() - current.getDay();
@@ -89,25 +92,25 @@
          * @param  
          * @return      
          * */
-        _dateFormat = function(dt, format) {
+        _dateFormat = function (dt, format) {
             format = format || 'dd-mm-YYYY';
             dt = _convertStrToDate(dt);
             var fullMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
             var fullDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'];
-            var zeropad = function(number, length) {
+            var zeropad = function (number, length) {
                     number = number.toString();
                     length = length || 2;
                     while (number.length < length)
                         number = '0' + number;
                     return number;
                 },
-                getYear2Digit = function(yr) {
+                getYear2Digit = function (yr) {
                     var yy = yr.toString();
                     return yy.substr(2, 4);
                 },
-                getMonthName = function(mon, type) {
+                getMonthName = function (mon, type) {
                     if (type == "mm") {
                         return fullMonths[mon];
                     } else if (type == "Mmm") {
@@ -116,7 +119,7 @@
                         return months[mon].toString().toUpperCase();
                     }
                 },
-                getDayName = function(dy, type) {
+                getDayName = function (dy, type) {
                     if (type == "1") {
                         return fullDays[dy];
                     } else if (type == "2") {
@@ -125,7 +128,7 @@
                         return days[dy].toString().toUpperCase();
                     }
                 },
-                getAmorpm = function(hrs) {
+                getAmorpm = function (hrs) {
                     return (hrs >= 12 ? 'PM' : 'AM');
                 },
                 formats = {
@@ -148,14 +151,14 @@
                     sc: zeropad(dt.getSeconds()) //seconds
                 },
                 pattern = '(' + Object.keys(formats).join(')|(') + ')';
-            return format.replace(new RegExp(pattern, 'g'), function(match) {
+            return format.replace(new RegExp(pattern, 'g'), function (match) {
                 return formats[match];
             });
         };
-        _dateSort = function(arr) {
+        _dateSort = function (arr) {
             var first = "";
             var last = "";
-            var data = arr.sort(function(a, b) {
+            var data = arr.sort(function (a, b) {
                 var c = _convertStrToDate(a);
                 var d = _convertStrToDate(b);
                 return c - d;
@@ -175,14 +178,14 @@
          * Timer Start
          * @return 
          */
-        _startTimer = function() {
+        _startTimer = function () {
             _timerStart = new Date().getTime();
         };
         /**
          * Timer End
          * @return 
          */
-        _endTimer = function() {
+        _endTimer = function () {
             var endTime = new Date().getTime();
             var time = endTime - _timerStart;
             return time + " milliseconds.";
@@ -196,4 +199,10 @@
             dateSort: _dateSort
         };
     }
-    var util = new dateUtil();
+    var sd =  dateUtil();
+    console.log(sd.dateFormat(new Date())); // 9-May-2016
+    console.log(sd.dateFormat(new Date(), "dd-mm-YYYY")); //9-May-2016
+    console.log(sd.dateFormat(new Date(), "dd-Mmm-YYYY")); //9-May-2016
+    console.log(sd.dateFormat(new Date(), "dd-MMM-YYYY")); //9-MAY-2016
+    console.log(sd.dateFormat(new Date(), "YYYY-mm-dd")); //2016-May-9
+    console.log(sd.getWeekDays(new Date())); //2016-May-9
